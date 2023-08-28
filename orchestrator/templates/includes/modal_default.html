@@ -1,0 +1,45 @@
+<!-- Button Modal -->
+<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-{{ item.id }}">
+    Ver valores</button>
+{% for item in object_list %}
+<!-- Modal Content -->
+<div class="modal fade" id="modal-{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="modal-{{ item.id }}"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="h6 modal-title">Item: {{item.id}}</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if item.value %}
+                <div class="col-lg-12 col-sm-6">
+                    <div class="mb-3">
+                        <label for="disabledTextInput">Valor númerico</label>
+                        <input type="number" id="disabledTextInput" class="form-control"
+                            placeholder="{{ item.value.value_number }}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput">Valor texto</label>
+                        <textarea class="form-control" placeholder="{{ item.value.value_text }}" id="textarea" rows="4"
+                            disabled></textarea>
+                    </div>
+                    {% else %}
+                    <div class="col-lg-12 col-sm-6">
+                        <div class="mb-1">
+                            <label>El item: {{item.id}}</label>
+                            <label>No tiene valores creados</label>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link text-gray-600 ms-auto"
+                        data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+{% endfor %}
+<!-- End of Modal Content -->

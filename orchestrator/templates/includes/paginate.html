@@ -1,0 +1,41 @@
+{% if is_paginated %}
+<div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination mb-0">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link"">Anterior</a>
+                </li>
+            {% endif %}
+            
+            {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class=" page-item active">
+                    <a class="page-link">{{i}}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{i}}">{{i}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link">Siguiente</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="fw-normal small mt-4 mt-lg-0">Mostrando <b>{{ object_list | length }}</b> registros de <b>{{ paginator.count }}</b> tareas
+    </div>
+</div>
+{% endif %}

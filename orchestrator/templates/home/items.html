@@ -1,0 +1,63 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Items {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2">
+    <div class="d-block mb-2 mb-md-0">
+        <h2 class="h4">Items de tarea ID: {{ task.id }}</h2>
+        <p class="mb-0">Proceso: {{ task.process_id }}</p>
+    </div>
+</div>
+
+<div class="card card-body border-0 shadow table-wrapper table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="border-gray-200">Id</th>
+                <th class="border-gray-200">Robot</th>
+                <th class="border-gray-200">Fecha de creación</th>
+                <th class="border-gray-200">Fecha de inicio</th>
+                <th class="border-gray-200">Fecha de fin</th>
+                <th class="border-gray-200">Estado</th>
+                <th class="border-gray-200">Obs.</th>
+                <th class="border-gray-200">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Item -->
+            {% for item in object_list %}
+            <tr>
+                <td> <span class="fw-extrabold">{{ item.id }}</span></td>
+                <td><span class="fw-normal">
+                    {% if not item.robot_id %}
+                    No asignado
+                    {% else %}
+                    {{ item.robot_id.user_id.username }}
+                    {% endif %}
+                </span></td>
+                <td><span class="fw-bold text-primary">{{ item.created_at|date:"d/m/Y" }} {{ item.created_at|time:"H:i" }}</span></td>
+                <td><span class="fw-bold text-info">{{ item.started_at|date:"d/m/Y" }} {{ item.started_at|time:"H:i" }}</span>
+                </td><td><span class="fw-bold text-success">{{ item.ended_at|date:"d/m/Y" }} {{ item.ended_at|time:"H:i" }}</span></td>
+                <td>
+                    <span class="border-0 {% if item.status == 'CREATED'%}text-info fw-bolder {% elif item.status == 'STARTED' %}text-warning fw-bolder{% elif item.status == 'COMPLETED' %}text-success fw-bolder{% elif item.status == 'ERROR' %}text-danger fw-bolder{% endif %}">
+                        {{ item.status }}
+                    </span>
+                </td>
+                <td><span class="fw-bold text-info">{{item.observation}}</span>
+                <td>{% include 'includes/modal_default.html'%}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

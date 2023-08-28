@@ -1,0 +1,55 @@
+
+    <a href="#" class="btn btn-block btn-info mb-0 d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal-form">
+        <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+            </path>
+        </svg>
+        Nueva tarea
+    </a>
+
+<!-- Modal Content -->
+<div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="card p-3 p-lg-4">
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center text-md-center mb-4 mt-md-0">
+                        <h1 class="mb-0 h4">Carga de tarea</h1>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <p class="fw-normal">
+                            Recuerda subir el formato .csv que se te fue otorgado
+                        </p>
+                    </div>
+                    <!-- Form -->
+                    <form method="post" enctype="multipart/form-data" class="mt-4" id="my-form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Cargue su archivo</label>
+                            <input class="form-control" type="file" id="formFile" name="formFile" required="true">
+                        </div>
+                        <div class="mb-4">
+                            <label class="my-1 me-2" for="process_id">Seleccione un proceso</label>
+                            <select class="form-select" id="{{process.id}}" name="process_id" aria-label="Default select example" required="true">
+                                {% for process in processes %}
+                                {% if process.enabled %}
+                                <option value="{{process.id}}">{{process.title}}</option>
+                                {% else %}
+                                <option value="{{process.id}}" disabled>{{process.title}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-gray-800">Enviar</button>
+                        </div>
+                    </form>
+                    <!-- EndForm -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Modal Content -->
